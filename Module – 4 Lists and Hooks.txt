@@ -1,0 +1,38 @@
+Q.  Explain Life cycle in Class Component and functional component with Hooks.
+
+--> 
+
+ # Lifecycle in Class Components:
+
+In class components, lifecycle methods are functions that are invoked automatically at various stages during a component's existence. These methods can be broadly categorized into three phases: Mounting, Updating, and Unmounting.
+
+1. Mounting Phase:
+   - constructor(): The constructor is the first method called when a component is initialized. It's typically used for initializing state and binding event handlers.
+   - render(): The render method is responsible for rendering the JSX returned by the component. It must be defined and is called each time the component needs to re-render.
+   - componentDidMount(): This method is invoked immediately after a component and all of its children components have been rendered to the DOM. It's commonly used for performing initialization tasks that require DOM nodes.
+
+2. Updating Phase:
+   - componentDidUpdate(prevProps, prevState): This method is called after the component's updates are flushed to the DOM. It's typically used to perform side effects such as fetching data in response to prop or state changes.
+   - shouldComponentUpdate(nextProps, nextState): This method allows the component to control whether it should re-render or not. It returns a boolean value indicating whether the component should update.
+
+3. Unmounting Phase:
+   - componentWillUnmount(): This method is called just before a component is unmounted and destroyed. It's used for cleanup tasks like removing event listeners or canceling network requests.
+
+#Lifecycle in Functional Components with Hooks:
+
+Functional components with hooks provide a simpler way to manage component lifecycle using built-in hooks like `useState`, `useEffect`, etc. Here's how the lifecycle is handled in functional components:
+
+1. Mounting and Updating:
+   - useEffect(): The `useEffect` hook allows you to perform side effects in function components. It combines the functionality of `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` from class components into a single hook.
+     - The function passed to `useEffect` is executed after the DOM has been updated.
+     - You can use `useEffect` with an empty dependency array (`[]`) to mimic `componentDidMount`, running the effect only once after the initial render.
+     - You can specify dependencies inside the array to control when the effect should re-run based on changes to those dependencies.
+
+2. State Management:
+   - useState(): The `useState` hook allows functional components to manage state. It returns a stateful value and a function to update it, similar to `this.state` and `this.setState` in class components.
+
+3. Context and Refs:
+   - useContext(): This hook allows you to access the context in functional components.
+   - useRef(): This hook allows you to create mutable refs in functional components.
+
+Functional components with hooks offer a more concise and readable way to manage state and side effects, reducing the need for lifecycle methods and providing a more predictable way to handle component behavior. They offer a more declarative approach to component lifecycle and state management.
