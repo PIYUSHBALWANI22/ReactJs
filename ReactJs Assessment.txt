@@ -1,0 +1,63 @@
+Here's how you can build a simple search filter functionality in React to filter and display a list of items based on a search query. Below are the steps and code snippets to achieve this:
+
+1. Declare React states for search input values.
+2. Create HTML input text for entering the search term and update state in the onChange function.
+3. Add Array.filter() on the list of items with the search term value.
+
+Here's a complete example:
+
+Step-by-Step Implementation
+
+Step 1: Set up the React component and state
+
+``` 
+import React, { useState } from 'react';
+
+const FruitSearch = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const fruits = ['Banana', 'Apple', 'Orange', 'Mango', 'Pineapple', 'Watermelon'];
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredFruits = fruits.filter(fruit =>
+    fruit.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+      <ul>
+        {filteredFruits.map((fruit, index) => (
+          <li key={index}>{fruit}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default FruitSearch;
+
+```
+
+Explanation
+
+1. Import React and useState: Import necessary hooks from React.
+2. State Declaration: Use the `useState` hook to declare a state variable `searchTerm` and a method `setSearchTerm` to update it.
+3. Fruit List: Define a list of fruits to be filtered.
+4. Handle Search Input Change: Define a function `handleSearchChange` that updates the `searchTerm` state whenever the input changes.
+5. Filter Fruits: Use the `Array.filter` method to create a new array `filteredFruits` that includes only those fruits whose names include the search term (case-insensitive).
+6. Render Input and List: Render an input field and a list. The input field updates the `searchTerm` state on change, and the list displays only the filtered fruits.
+
+Usage
+
+1. Include the Component: Use the `FruitSearch` component in your application where you want the search functionality.
+2. Run the Application: Ensure your React application is set up and running. This component will provide a live search feature for the list of fruits.
+
+You can adapt this code to suit your specific needs, such as changing the list of items or customizing the styling.
