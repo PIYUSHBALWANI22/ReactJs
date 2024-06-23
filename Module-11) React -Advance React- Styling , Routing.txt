@@ -199,7 +199,7 @@ Your React app should now have a lazy-loaded Admin module with nested routes for
 
 • Create Shopping site home page with Styled- component
 
---> Creating a shopping site homepage in React using Styled-components involves several steps. Here is a guide to help you set up your project and create a similar homepage as shown in the image.
+--> Creating a shopping site homepage in React using Styled-components.
 
 Step 1: Set Up Your React Project
 
