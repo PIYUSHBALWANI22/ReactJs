@@ -1,0 +1,511 @@
+Module 6) React Router
+
+• Create React app with modules and lazy loading (Admin-user module with child 
+router and outlet) 
+
+
+--> Creating a React app with modules and lazy loading, including an Admin-user module with child routing and an outlet, involves several steps. Here's a comprehensive guide to set this up using React Router for routing and React's `lazy` and `Suspense` for lazy loading.
+
+Step 1: Set Up Your React App
+First, you need to create a new React app. You can do this using Create React App:
+
+```bash
+npx create-react-app my-app
+cd my-app
+
+```
+
+Step 2: Install React Router
+Install `react-router-dom` for routing:
+
+```bash
+npm install react-router-dom
+
+```
+
+Step 3: Create the Folder Structure
+Organize your project structure to include an `Admin` module and user-specific components:
+
+```
+my-app
+├── public
+├── src
+│   ├── components
+│   ├── modules
+│   │   └── Admin
+│   │       ├── AdminDashboard.jsx
+│   │       ├── UserManagement.jsx
+│   │       └── AdminRoutes.jsx
+│   ├── App.jsx
+│   ├── index.js
+│   └── routes.jsx
+└── package.json
+
+```
+
+Step 4: Create Components and Routes for the Admin Module
+
+#`AdminDashboard.js`
+```js
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+
+const AdminDashboard = () => {
+  return (
+    <div>
+      <h1>Admin Dashboard</h1>
+      <nav>
+        <ul>
+          <li><Link to="user-management">User Management</Link></li>
+        </ul>
+      </nav>
+      <Outlet />
+    </div>
+  );
+};
+
+export default AdminDashboard;
+
+```
+
+#`UserManagement.js`
+```js
+import React from 'react';
+
+const UserManagement = () => {
+  return (
+    <div>
+      <h2>User Management</h2>
+      <p>Manage your users here.</p>
+    </div>
+  );
+};
+
+export default UserManagement;
+
+```
+
+#`AdminRoutes.js`
+```js
+import React, { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+const AdminDashboard = lazy(() => import('./AdminDashboard'));
+const UserManagement = lazy(() => import('./UserManagement'));
+
+const AdminRoutes = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<AdminDashboard />}>
+          <Route path="user-management" element={<UserManagement />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  );
+};
+
+export default AdminRoutes;
+
+```
+
+Step 5: Define Main Routes
+
+# `routes.js`
+```js
+ import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, } from 'react-router-dom';
+  
+
+const AdminRoutes = lazy(() => import('./modules/Admin/AdminRoutes'));
+
+const AppRoutes = () => {
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="admin/*" element={<AdminRoutes />} />
+          <Route path="/" element={<div> <h1>Home Page</h1><ul><li><Link to="/admin">Admin Dashboard</Link></li></ul></div>  } />
+           
+           
+          {/* Add other routes here */}
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+};
+
+export default AppRoutes;
+
+```
+
+ Step 6: Update `App.js`
+
+#`App.js`
+```jsx
+import React from 'react';
+import AppRoutes from './routes';
+
+function App() {
+  return (
+    <div className="App">
+      <AppRoutes />
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+Step 7: Update `index.js`
+
+ `index.js`
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+reportWebVitals();
+
+```
+
+Step 8: Run Your App
+
+```bash
+npm start
+
+```
+
+Your React app should now have a lazy-loaded Admin module with nested routes for user management. When you navigate to `/admin`, the `AdminDashboard` component will be loaded, and when you navigate to `/admin/user-management`, the `UserManagement` component will be loaded within the `AdminDashboard` layout.
+
+
+
+
+
+
+                                                          Module-5) React - Styling & Advance React 
+
+
+
+• Create Shopping site home page with Styled- component
+
+--> Creating a shopping site homepage in React using Styled-components involves several steps. Here is a guide to help you set up your project and create a similar homepage as shown in the image.
+
+Step 1: Set Up Your React Project
+
+First, set up your React project if you haven't already:
+
+```bash
+npx create-react-app shopping-site
+cd shopping-site
+npm install styled-components
+
+```
+
+Step 2: Create Styled Components
+
+Next, create styled components for different sections of the homepage. You can create a `components` directory and add styled components there.
+
+components/Container.js:
+``` 
+ import styled from 'styled-components';
+
+export const Container = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+`;
+
+export const Logo = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+export const Nav = styled.nav`
+  ul {
+    display: flex;
+    list-style: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+`;
+
+export const MainBanner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url('https://nest-frontend-v6.netlify.app/assets/imgs/slider/slider-1.png');
+  background-size:cover;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+
+  img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .content {
+    max-width: 50%;
+  }
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+`;
+
+export const CategoryList = styled.div`
+  display: flex;
+  overflow-x: scroll;
+  margin-top: 20px;
+
+  div {
+    min-width: 150px;
+    margin-right: 10px;
+    text-align: center;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  img {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+`;
+
+```
+
+Step 3: Create the Homepage Component
+
+Now, create the `HomePage` component using the styled components.
+
+src/HomePage.js:
+``` 
+ import React from 'react';
+import { Container, Header, Logo, Nav, MainBanner, CategoryList } from './Container';
+import './App.css'
+
+const HomePage = () => {
+  return (
+    <Container>
+      <Header>
+        <Logo className='logo'> <img src='https://webstockreview.net/images/egg-clipart-nest-2.png' width={100} alt='nest'/> <h2>Nest</h2>
+           <p>Mart & Grocery</p>
+          </Logo>
+           
+        <Nav>
+          <ul>
+          <li><input type='text' placeholder='Search for items...' width="200px"></input><button type='submit'>search</button></li>
+          <li><select>
+            <option>Your location</option>
+            <option>India</option>
+            <option>USA</option>
+            <option>Russia</option>
+            </select></li>
+            <li><a href='/'>Compare</a></li>
+            <li><a href='/'>Whishlist</a></li>
+            <li><a href='/'>Cart</a></li>
+            <li><a href='/'>Account</a></li>
+          </ul>
+        </Nav>
+      </Header>
+      <MainBanner>
+        <div className="content">
+          <h1>Don't miss amazing</h1>
+          <h1>grocery deals</h1>
+          <p>Sign up for the daily newsletter</p>
+          <input type="email" placeholder="Your email address" />
+          <button>Subscribe</button>
+        </div>
+         
+      </MainBanner>
+      <CategoryList>
+        <div>
+          <img src="https://pics.clipartpng.com/midle/Red_Apples_PNG_Clipart-256.png" alt="Red Apple" />
+          <p>Red Apple</p>
+        </div>
+        <div>
+          <img src="https://toppng.com/public/uploads/thumbnail/snack-clipart-png-snack-11563210831afxshg3jel.png" alt="Snack" />
+          <p>Snack</p>
+        </div>
+        <div>
+          <img src="https://th.bing.com/th/id/OIP.hQJ3VBDbRBna2wMU6QXAXwHaHa?rs=1&pid=ImgDetMain" alt="Vegetables" />
+          <p>Vegetables</p>
+        </div>
+        <div>
+          <img src="https://th.bing.com/th/id/R.7db7efd545ea382f779db2aecf002d3f?rik=siwFnCfE%2fFnI%2fw&riu=http%3a%2f%2fwww.pngmart.com%2ffiles%2f3%2fStrawberry-Transparent-Background.png&ehk=a7WihXnHT%2faSg7Dzbfsj5hYR%2bwEcN7Vl9k7NF8PPXTc%3d&risl=&pid=ImgRaw&r=0" alt="Strawberry" />
+          <p>Strawberry</p>
+        </div>
+        <div>
+          <img src="https://pngimg.com/uploads/plum/plum_PNG8675.png" alt="Black plum" />
+          <p>Black plum</p>
+        </div>
+        <div>
+          <img src="https://www.pngplay.com/wp-content/uploads/10/Custard-Apple-Transparent-Image.png" alt="Custard Apple" />
+          <p>Custard Apple</p>
+        </div>
+        <div>
+          <img src="https://i.etsystatic.com/5584756/r/il/73bbf1/3476767177/il_1588xN.3476767177_5oxk.jpg" alt="Coffe & tea" />
+          <p>Coffe & tea</p>
+        </div>
+        <div>
+          <img src="https://th.bing.com/th/id/OIP.YxzgZnAIWokEtUMER89OkQAAAA?rs=1&pid=ImgDetMain" alt="Headphone" />
+          <p>Headphone</p>
+        </div>
+        <div>
+          <img src="https://i.pinimg.com/736x/95/aa/34/95aa34722ae9ea7e8faa874e5d24ebab.jpg" alt="Cake & Milk" />
+          <p>Cake & Milk</p>
+        </div>
+        <div>
+          <img src="https://th.bing.com/th/id/R.d6fa2a13d98f251e3919dc8f82b625b8?rik=Vr3BSUQ31ZXRCQ&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fkiwi-transparent%2fkiwi-transparent-16.png&ehk=yqfi%2fmsGR1vQeODT7jERelO27mShAWmTmPGbaPs2zbE%3d&risl=&pid=ImgRaw&r=0" alt="Oganic kiwi" />
+          <p>Organic Kiwi</p>
+        </div>
+        {/* Add more categories similarly */}
+      </CategoryList>
+    </Container>
+  );
+};
+
+export default HomePage;
+
+```
+
+Step 4: Update App.js
+
+Finally, update your `App.js` to render the `HomePage` component.
+
+src/App.js:
+``` 
+import React from 'react';
+import HomePage from './HomePage';
+
+const App = () => {
+  return (
+    <div>
+      <HomePage />
+    </div>
+  );
+};
+
+export default App;
+
+```
+
+Step 5: Add CSS and Images
+
+ .App {
+  text-align: center;
+}
+
+a
+{
+  color: gray;
+  text-decoration: none;
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+ Step 6: Run Your Project
+
+Now, run your project to see the homepage:
+
+```bash
+npm start
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
