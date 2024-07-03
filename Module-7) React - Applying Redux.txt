@@ -271,7 +271,7 @@ Ensure your React application is running:
 npm start
 ```
 
-This setup will give you a search functionality and display the data in a table as shown in the image you provided. The table will dynamically update as you type in the search box.
+This setup will give you a search functionality and display the data in a table. The table will dynamically update as you type in the search box.
 
 
 
